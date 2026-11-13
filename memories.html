@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Memories</title>
+    <link rel="stylesheet" href="memories.css">
+</head>
+<body>
+
+    <!-- HERO -->
+    <header class="memory-hero">
+        <div class="hero-wrapper">
+
+            <div class="floating-decorations">
+                <span class="float-item heart h1">♥</span>
+                <span class="float-item heart h2">♡</span>
+                <span class="float-item sparkle s1">✦</span>
+                <span class="float-item sparkle s2">✧</span>
+                <span class="float-item flower f1">🌸</span>
+                <span class="float-item flower f2">✿</span>
+                <span class="float-item star st1">⋆</span>
+                <span class="float-item heart h3">💕</span>
+                <span class="float-item star st2">✧</span>
+                <span class="float-item heart h4">♥</span>
+                <span class="float-item flower f3">❀</span>
+                <span class="float-item sparkle s3">✦</span>
+            </div>
+
+            <div class="hero-content">
+                <h1 class="hero-title">Let's Revisit Our Memories ✨</h1>
+                <p class="hero-subtitle">
+                    Every picture tells a story of us...
+                </p>
+            </div>
+
+            <img src="hero.png" alt="Us" class="sticker-image">
+        </div>
+    </header>
+
+    <!-- MEMORY TIMELINE -->
+    <main class="memory-gallery">
+
+        <div class="timeline-heading">
+            <span>♡ A JOURNEY THROUGH TIME ♡</span>
+            <h2>16 Months of Memories</h2>
+            <p>Every little moment deserves a place in our story.</p>
+        </div>
+
+        <section class="timeline" id="timeline">
+            <svg class="timeline-path" id="timelinePath"
+                 preserveAspectRatio="none">
+                <path id="timelineLine"/>
+            </svg>
+
+            <div class="timeline-nodes" id="timelineNodes"></div>
+        </section>
+
+        <p class="timeline-footer">
+            And the story continues... ♡
+        </p>
+
+    </main>
+
+    <!-- FULL SCREEN CAROUSEL -->
+    <div class="memory-modal" id="memoryModal">
+
+        <button class="close-modal" id="closeModal"
+                aria-label="Close gallery">×</button>
+
+        <div class="modal-heading">
+            <span>OUR LITTLE MOMENTS</span>
+            <h2 id="modalMonth">January</h2>
+            <p id="modalCaption">Every picture holds a memory ♡</p>
+        </div>
+
+        <div class="carousel">
+            <button class="carousel-arrow prev" id="prevPhoto"
+                    aria-label="Previous photo">❮</button>
+
+            <div class="carousel-photo-container">
+                <img id="carouselImage" src="" alt="Memory">
+                <p id="photoCaption"></p>
+            </div>
+
+            <button class="carousel-arrow next" id="nextPhoto"
+                    aria-label="Next photo">❯</button>
+        </div>
+
+        <div class="carousel-footer">
+            <span id="photoCounter">01 / 05</span>
+            <div class="carousel-dots" id="carouselDots"></div>
+        </div>
+
+    </div>
+
+    <script src="memories.js"></script>
+</body>
+</html>

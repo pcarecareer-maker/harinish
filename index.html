@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Little Something For You...</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Animation Container -->
+    <div id="ambient-background"></div>
+
+    <!-- Main Content -->
+    <main id="main-container">
+        <div id="envelope-wrapper">
+            <div class="envelope" id="envelope">
+                <div class="flap"></div>
+                
+                <!-- The small preview letter inside the envelope -->
+                <div class="letter">
+                    <div class="letter-content">
+                        <div class="floral-header"></div>
+                        <p style="font-style: italic; color: #888;">Unfolding your letter...</p>
+                    </div>
+                </div>
+                
+                <div class="envelope-front">
+                    <div class="seal"></div>
+                </div>
+                <div class="envelope-back"></div>
+            </div>
+            <p class="caption" id="caption">A little something for you...</p>
+        </div>
+    </main>
+
+    <!-- FULL SCREEN SCROLLABLE LETTER -->
+    <div id="letter-overlay">
+        <!-- Layout wraps both the paper (left) and buttons (right) -->
+        <div class="letter-layout">
+            
+            <!-- LEFT SIDE: The physical letter paper -->
+            <div class="letter-paper">
+                <button class="close-btn" id="close-letter">&times;</button>
+                
+                <!-- Cute Doodles / Watermarks -->
+                <div class="watermark doodle-heart-1"></div>
+                <div class="watermark doodle-heart-2"></div>
+                <div class="watermark doodle-rose-1"></div>
+                <div class="watermark doodle-rose-2"></div>
+                <div class="watermark doodle-sparkle-1"></div>
+                <div class="watermark doodle-sparkle-2"></div>
+
+                <!-- Letter Content -->
+                <div class="letter-text-section">
+                    <div class="long-letter-content">
+                        <p>My Nichu,</p>
+                        
+                          <p>Happy birthday to the one without whom I can't imagine the life I'm living right now. You're the reason I show up to college every day. My happy place. ❤️</p>
+
+<p>There's something truly special about you. You never let the people around you down. Not everyone can be a good person, inside and out, but you are, and I'm genuinely glad to have you by my side.</p>
+
+<p>We all need a soul who truly understands us and accepts us for who we are. Thank you for being that soul. I hope you feel the same way too.</p>
+
+<p>May this year be the happiest one yet! Be strong in your decisions. You're a smart girl, so trust yourself and your choices. Everything will fall into place. May all your dreams come true.</p>
+
+<p>No matter what, I'll always be by your side. Be you and keep on shining, Nishmaa. Love you! ❤️</p>
+                        
+                        <p style="margin-top: 40px;">With all my love,<br><strong>Hariniiii</strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE: Centered Buttons outside the paper -->
+            <div class="letter-action-section">
+                <button class="btn-cute" id="btn-memories">✨ Stroll Down Memory Lane</button>
+                <button class="btn-cute" id="btn-quiz">💌 Take Our Love Quiz</button>
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

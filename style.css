@@ -1,0 +1,445 @@
+/* Base Reset & Variables */
+:root {
+    --bg-color: #FAF9F6; /* Warm Ivory */
+    --envelope-main: #f28c28; /* Elegant Orange */
+    --envelope-dark: #d67a20;
+    --envelope-light: #f5a04a;
+    --letter-bg: #ffe0b2;; /* Cream */
+    --text-color: #333333;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: "Georgia", serif;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    color: var(--text-color);
+}
+
+/* Ambient Background */
+#ambient-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.ambient-element {
+    position: absolute;
+    will-change: transform;
+}
+
+.ambient-element img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Envelope Container */
+#main-container {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#envelope-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.envelope {
+    position: relative;
+    width: 320px;
+    height: 220px;
+    cursor: pointer;
+    perspective: 1000px;
+    animation: float 4s ease-in-out infinite;
+    transition: transform 0.3s ease;
+}
+
+.envelope:hover {
+    transform: scale(1.02);
+}
+
+/* Envelope Geometry */
+.envelope-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--envelope-main);
+    border-radius: 5px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    z-index: 1;
+}
+
+.letter {
+    position: absolute;
+    bottom: 0;
+    left: 5%;
+    width: 90%;
+    height: 95%;
+    background-color: var(--letter-bg);
+    border-radius: 5px;
+    z-index: 2;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s, 
+                height 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.letter-content {
+    padding: 30px 20px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.5s ease 0.8s;
+    line-height: 1.6;
+}
+
+.floral-header {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 15px;
+    background-image: url('assets/flowers/flower-1.png'); 
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.8;
+}
+
+.envelope-front {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    border-left: 160px solid var(--envelope-light);
+    border-right: 160px solid var(--envelope-light);
+    border-bottom: 110px solid var(--envelope-dark);
+    border-top: 110px solid transparent;
+    border-radius: 0 0 5px 5px;
+}
+
+.seal {
+    position: absolute;
+    bottom: -30px;
+    left: calc(50% - 150px); 
+    width: 40px;
+    height: 40px;
+    background-image: url('assets/flowers/flower-2.png'); 
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 50%;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 160px solid transparent;
+    border-right: 160px solid transparent;
+    border-top: 130px solid var(--envelope-main);
+    z-index: 4;
+    transform-origin: top;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), z-index 0s 0.3s;
+}
+
+/* Open Animations */
+.envelope.is-open {
+    animation-play-state: paused;
+    cursor: default;
+}
+
+.envelope.is-open:hover {
+    transform: scale(1);
+}
+
+.envelope.is-open .flap {
+    transform: rotateX(180deg);
+    z-index: 1; 
+}
+
+.envelope.is-open .letter {
+    transform: translateY(-60%);
+    height: 380px; 
+    z-index: 5; 
+}
+
+.envelope.is-open .letter-content {
+    opacity: 1;
+}
+
+.caption {
+    font-size: 1.1rem;
+    color: #666;
+    letter-spacing: 1px;
+    transition: opacity 0.3s ease;
+}
+
+.envelope.is-open ~ .caption {
+    opacity: 0;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+/* --- FULL SCREEN LETTER OVERLAY BASE --- */
+#letter-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(250, 249, 246, 0.95); /* Matches warm ivory background */
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    backdrop-filter: blur(5px);
+}
+
+#letter-overlay.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.letter-paper {
+    background-color: var(--letter-bg);
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    position: relative; /* Ensures the close button positions correctly inside */
+    width: 90%;
+    /* Made it slightly wider for the side-by-side layout */
+    max-width: 950px; 
+    padding: 40px;
+    overflow: hidden; 
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 32px;
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    z-index: 10;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: var(--envelope-main);
+}
+/* --- FULL SCREEN LETTER OVERLAY TWEAKS --- */
+.letter-paper {
+    /* Made it slightly wider for the side-by-side layout */
+    max-width: 950px; 
+    padding: 40px;
+    overflow: hidden; /* We moved the scrollbar to the text section */
+}
+
+/* --- SIDE-BY-SIDE LAYOUT --- */
+.letter-layout {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 50px;
+    width: 90%;
+    max-width: 1100px;
+    height: 100%;
+}
+
+.letter-paper {
+    background-color: var(--letter-bg);
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    position: relative;
+    padding: 40px;
+    flex: 1.6;
+    height: 85vh; /* Keeps the paper bounded */
+    display: flex;
+    flex-direction: column;
+}
+
+.letter-text-section {
+    overflow-y: auto;
+    padding-right: 20px;
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    
+    /* Elegant custom scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: var(--envelope-light) transparent;
+}
+
+.letter-text-section::-webkit-scrollbar {
+    width: 6px;
+}
+.letter-text-section::-webkit-scrollbar-thumb {
+    background-color: var(--envelope-light);
+    border-radius: 3px;
+}
+
+.long-letter-content {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--text-color);
+    text-align: left;
+}
+
+.long-letter-content p {
+    margin-bottom: 20px;
+}
+
+/* --- RIGHT SIDE BUTTONS --- */
+.letter-action-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 25px;
+}
+
+.btn-cute {
+    background-color: var(--envelope-light);
+    color: #fff;
+    border: none;
+    padding: 18px 24px;
+    font-size: 1.1rem;
+    font-family: inherit;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(242, 140, 40, 0.3);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s, box-shadow 0.3s;
+    width: 100%;
+}
+
+.btn-cute:hover {
+    background-color: var(--envelope-main);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(242, 140, 40, 0.4);
+}
+
+.btn-cute:active {
+    transform: translateY(0px) scale(0.98);
+}
+
+/* --- DOODLES & WATERMARKS --- */
+.watermark {
+    position: absolute;
+    opacity: 0.1;
+    pointer-events: none; 
+    z-index: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* 1. Solid Hearts */
+.doodle-heart-1 {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23f28c28"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+    width: 100px; height: 100px;
+    top: 10%; right: 40%;
+    transform: rotate(15deg);
+}
+.doodle-heart-2 {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23f28c28"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+    width: 60px; height: 60px;
+    bottom: 15%; left: 5%;
+    transform: rotate(-20deg);
+}
+
+/* 2. Outline Rose / Flower */
+.doodle-rose-1 {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23f28c28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12M12 12C12 12 8 9 8 5C8 3 9.5 2 12 2C14.5 2 16 3 16 5C16 9 12 12 12 12ZM12 12C12 12 5 13 3 10C1.5 8 3 6 5 6C8 6 12 12 12 12ZM12 12C12 12 19 13 21 10C22.5 8 21 6 19 6C16 6 12 12 12 12Z"/></svg>');
+    width: 140px; height: 140px;
+    top: 50%; left: -2%;
+    transform: translateY(-50%) rotate(45deg);
+}
+.doodle-rose-2 {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23f28c28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12M12 12C12 12 8 9 8 5C8 3 9.5 2 12 2C14.5 2 16 3 16 5C16 9 12 12 12 12ZM12 12C12 12 19 13 21 10C22.5 8 21 6 19 6C16 6 12 12 12 12Z"/></svg>');
+    width: 90px; height: 90px;
+    bottom: 5%; right: 35%;
+    transform: rotate(-15deg);
+}
+
+/* 3. Sparkles */
+.doodle-sparkle-1 {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23f28c28"><path d="M12 2C12 7.5 7.5 12 2 12C7.5 12 12 16.5 12 22C12 16.5 16.5 12 22 12C16.5 12 12 7.5 12 2Z"/></svg>');
+    width: 50px; height: 50px;
+    top: 25%; right: 8%;
+}
+.doodle-sparkle-2 {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23f28c28"><path d="M12 2C12 7.5 7.5 12 2 12C7.5 12 12 16.5 12 22C12 16.5 16.5 12 22 12C16.5 12 12 7.5 12 2Z"/></svg>');
+    width: 70px; height: 70px;
+    bottom: 30%; left: 30%;
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 768px) {
+    .letter-layout {
+        flex-direction: column;
+        justify-content: center;
+        gap: 20px;
+    }
+    
+    .letter-paper {
+        flex: none;
+        height: 60vh;
+        width: 100%;
+        padding: 30px;
+    }
+
+    .letter-action-section {
+        flex: none;
+        width: 100%;
+    }
+}
+
+/* --- EMOJI POP EFFECT --- */
+.emoji-particle {
+    position: fixed;
+    font-size: 28px; 
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    animation: popEmoji 1s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes popEmoji {
+    0% {
+        transform: translate(-50%, -50%) scale(0.2) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.2) rotate(var(--rot));
+        opacity: 0;
+    }
+}
